@@ -57,9 +57,15 @@ class HomeController extends GetxController {
 
 
 
+  ///=========================================Stripe=======================================
+
+  Map<String, dynamic>? paymentIntentData;
+
+  // Your Stripe Secret Key (test mode only! NEVER use in production like this)
+  // final String secretKey = 'sk_test_51RV4ORDENSObmJv7hzL2FXhdxnFao8LQs5xvsiFfdT2Sc7is3BeGQiFa20pRMmJ4xNCHxZ6WedqLyjbWL4Ueiwwh007MO3ZZEy';
+
   Future<void> payment(String amount, String currency) async {
-    Stripe.publishableKey =
-         "pk_test_51RV4ORDENSObmJv7423HHaBNeBjbrVuHAzGp26xnBicJf5pUUbnNhEj2Z1gkdFzsoVCGqtK3GQ7dviGqwmz50Psl003m2dId6G";
+    Stripe.publishableKey = stripePublishableKey;
     try {
       paymentIntentData = await createPaymentIntent(amount, currency);
 
@@ -77,30 +83,31 @@ class HomeController extends GetxController {
 
       await Stripe.instance.presentPaymentSheet();
 
-      Get.snackbar("Success", "Payment successful");
+      CommonSnackBarMessage.successMessage(text: "Payment Successful");
+      Get.offAllNamed(RouteNames.navbar);
     } catch (e) {
-      Get.snackbar("Payment Error", e.toString());
+      CommonSnackBarMessage.errorMessage(text: "Payment Failed");
+
       log(e.toString());
     }
   }
 
   Future<Map<String, dynamic>?> createPaymentIntent(String amount, String currency) async {
-    String kye = "sk_test_51RV4ORDENSObmJv7hzL2FXhdxnFao8LQs5xvsiFfdT2Sc7is3BeGQiFa20pRMmJ4xNCHxZ6WedqLyjbWL4Ueiwwh007MO3ZZEy";
     try {
       final response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
-        headers: {'Authorization': 'Bearer $kye', 'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Authorization': 'Bearer $stripeSecretKey', 'Content-Type': 'application/x-www-form-urlencoded'},
         body: {'amount': (double.parse(amount) * 100).toInt().toString(), 'currency': currency, 'payment_method_types[]': 'card'},
       );
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else {
-        print('Failed to create payment intent: ${response.body}');
+        log('Failed to create payment intent: ${response.body}');
         return null;
       }
     } catch (e) {
-      print('Error creating payment intent: $e');
+      log('Error creating payment intent: $e');
       return null;
     }
   }
