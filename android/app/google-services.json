@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "731211488924",
+    "project_id": "e-commerce-b3f3e",
+    "storage_bucket": "e-commerce-b3f3e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731211488924:android:899dcfb257301ba7a59759",
+        "android_client_info": {
+          "package_name": "com.classicit.foodfinder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtlMM-OU8KILOmFIMQiNpo5ijWr4sIPm8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
