@@ -55,12 +55,11 @@ class HomeController extends GetxController {
 
   Map<String, dynamic>? paymentIntentData;
 
-  // Your Stripe Secret Key (test mode only! NEVER use in production like this)
-  final String secretKey = 'pk_test_51RV4ORDENSObmJv7423HHaBNeBjbrVuHAzGp26xnBicJf5pUUbnNhEj2Z1gkdFzsoVCGqtK3GQ7dviGqwmz50Psl003m2dId6G';
+
 
   Future<void> payment(String amount, String currency) async {
     Stripe.publishableKey =
-        secretKey; // "pk_test_51RV4ORDENSObmJv7423HHaBNeBjbrVuHAzGp26xnBicJf5pUUbnNhEj2Z1gkdFzsoVCGqtK3GQ7dviGqwmz50Psl003m2dId6G";
+         "pk_test_51RV4ORDENSObmJv7423HHaBNeBjbrVuHAzGp26xnBicJf5pUUbnNhEj2Z1gkdFzsoVCGqtK3GQ7dviGqwmz50Psl003m2dId6G";
     try {
       paymentIntentData = await createPaymentIntent(amount, currency);
 
